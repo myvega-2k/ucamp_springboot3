@@ -50,7 +50,7 @@ public class DefaultExceptionAdvice {
         return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(RuntimeException.class)
     protected ResponseEntity<ErrorObject> handleException(Exception e) {
         ErrorObject errorObject = new ErrorObject();
         errorObject.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());

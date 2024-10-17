@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -33,5 +34,14 @@ public class UserRestController {
         );
     }
 
+    @GetMapping
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+    @PatchMapping("/{email}")
+    public User updateUser(@PathVariable String email, @RequestBody User userDetail) {
+
+    }
 
 }
