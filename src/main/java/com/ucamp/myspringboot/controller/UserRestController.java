@@ -44,7 +44,8 @@ public class UserRestController {
         User existUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessException("User Not Found", HttpStatus.NOT_FOUND));
 
-
+        existUser.setName(userDetail.getName());
+        return userRepository.save(existUser);
     }
 
 }
