@@ -6,6 +6,8 @@ import com.ucamp.myspringboot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
@@ -20,6 +22,11 @@ public class UserRestfulController {
     @GetMapping("/{id}")
     public UserResDTO getUser(@PathVariable Long id) {
         return userService.getUser(id);
+    }
+
+    @GetMapping
+    public List<UserResDTO> getUserList() {
+        return userService.getUserList();
     }
 
 }

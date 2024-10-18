@@ -39,6 +39,8 @@ public class UserService {
                 .orElseThrow(() -> new BusinessException("User Not Found", HttpStatus.NOT_FOUND));
     }
 
+    //List<User> => List<UserResDTO>
+    //List<User> -> Stream<User> -> Stream<UserResDtO> -> List<UserResDTO>
     public List<UserResDTO> getUserList(){
         List<User> userEntityList = userRepository.findAll();
         return userEntityList.stream() //Stream<User>
