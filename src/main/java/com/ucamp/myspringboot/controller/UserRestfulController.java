@@ -17,4 +17,9 @@ public class UserRestfulController {
         return userService.addUser(reqDTO);
     }
 
+    @GetMapping("/{id}")
+    public UserResDTO getUser(@PathVariable Long id) {
+        return userService.getUser(id);
+    }
+
 }

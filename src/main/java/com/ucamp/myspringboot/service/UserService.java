@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -26,7 +28,6 @@ public class UserService {
         return modelMapper.map(saved, UserResDTO.class);
     }
 
-
     public UserResDTO getUser(Long id) {
 //        User entity = userRepository.findById(id)
 //                .orElseThrow(() -> new BusinessException("User Not Found", HttpStatus.NOT_FOUND));
@@ -36,8 +37,16 @@ public class UserService {
                 //map(Function) Function 의 추상메서드 R apply(T t)
                 .map(entity -> modelMapper.map(entity,UserResDTO.class))
                 .orElseThrow(() -> new BusinessException("User Not Found", HttpStatus.NOT_FOUND));
-
     }
+
+    public List<UserResDTO> getUserList(){
+        List<User> userEntityList = userRepository.findAll();
+        return userEntityList.stream() //Stream<User>
+                .map(entity -> modelMapper.map(entity,UserResDTO.class)) //Stream<UserResDTO>
+                .toList(); //List<UserResDTO>
+    }
+
+
 
 
 
