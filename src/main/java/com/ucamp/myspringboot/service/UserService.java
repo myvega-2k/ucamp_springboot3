@@ -14,12 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
+    @Transactional
     public UserResDTO addUser(UserReqDTO reqDTO){
         //DTO => Entity
         User userEntity = modelMapper.map(reqDTO, User.class);
@@ -55,8 +56,26 @@ public class UserService {
                 .orElseThrow(() -> new BusinessException("User Not Found", HttpStatus.NOT_FOUND));
     }
 
+    @Transactional
+    public UserResDTO updateUser(Long id, UserReqDTO reqDTO){
+        User existUser = getUserNotFound(id);
+        //setter methoda 만 호출 update 쿼리가 수행됨 dirty checking
+        existUser.setName(reqDTO.getName());
+        existUser.setEmail(reqDTO.getEmail());
+        return modelMapper.map(existUser, UserResDTO.class);
+    }
+
+    @Transactional
+    public void deleteUser(Long id) {
+        User existUser = getUserNotFound(id);
+        userRepository.delete(existUser);
+    }
 
 
-
+    private User getUserNotFound(Long id) {
+        return userRepository.findById(id).orElseThrow(
+                () -> new BusinessException("User Not Found", HttpStatus.NOT_FOUND)
+        );
+    }
 
 }

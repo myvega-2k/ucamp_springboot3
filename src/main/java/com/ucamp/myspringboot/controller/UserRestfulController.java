@@ -4,6 +4,7 @@ import com.ucamp.myspringboot.dto.UserReqDTO;
 import com.ucamp.myspringboot.dto.UserResDTO;
 import com.ucamp.myspringboot.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +30,20 @@ public class UserRestfulController {
         return userService.getUserList();
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/{email}/")
     public UserResDTO getUserByEmail(@PathVariable String email){
         return userService.getUserByEmail(email);
+    }
+
+    @PutMapping("/{id}")
+    public UserResDTO updateUser(@PathVariable Long id,
+                                 @RequestBody UserReqDTO reqDTO){
+        return userService.updateUser(id,reqDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return  ResponseEntity.ok("Id = " + id + " User가 삭제 되었습니다.");
     }
 }
