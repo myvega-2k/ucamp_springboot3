@@ -39,7 +39,7 @@ public class UserRestController {
         return userRepository.findAll();
     }
 
-    @PatchMapping("/{email}")
+    @PatchMapping("/{email}/")
     public User updateUser(@PathVariable String email, @RequestBody User userDetail) {
         User existUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessException("User Not Found", HttpStatus.NOT_FOUND));
