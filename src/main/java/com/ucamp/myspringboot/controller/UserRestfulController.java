@@ -1,9 +1,10 @@
 package com.ucamp.myspringboot.controller;
 
+import com.ucamp.myspringboot.dto.UserReqDTO;
+import com.ucamp.myspringboot.dto.UserResDTO;
 import com.ucamp.myspringboot.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -11,5 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserRestfulController {
     private final UserService userService;
 
+    @PostMapping
+    public UserResDTO addUser(@RequestBody UserReqDTO reqDTO){
+        return userService.addUser(reqDTO);
+    }
 
 }
