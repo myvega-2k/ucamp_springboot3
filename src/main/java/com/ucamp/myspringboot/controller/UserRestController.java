@@ -1,5 +1,6 @@
 package com.ucamp.myspringboot.controller;
 
+import com.ucamp.myspringboot.dto.UserResDTO;
 import com.ucamp.myspringboot.entity.User;
 import com.ucamp.myspringboot.exception.BusinessException;
 import com.ucamp.myspringboot.repository.UserRepository;
@@ -44,6 +45,7 @@ public class UserRestController {
     public List<User> getUsers() {
         return userRepository.findAll();
     }
+    
 
     @PatchMapping("/{email}/")
     public User updateUser(@PathVariable String email, @RequestBody User userDetail) {

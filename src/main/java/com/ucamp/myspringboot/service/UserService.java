@@ -49,6 +49,13 @@ public class UserService {
     }
 
 
+    public UserResDTO getUserByEmail(String email){
+        return userRepository.findByEmail(email)
+                .map(entity -> modelMapper.map(entity,UserResDTO.class))
+                .orElseThrow(() -> new BusinessException("User Not Found", HttpStatus.NOT_FOUND));
+    }
+
+
 
 
 

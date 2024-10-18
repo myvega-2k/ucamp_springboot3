@@ -29,4 +29,8 @@ public class UserRestfulController {
         return userService.getUserList();
     }
 
+    @GetMapping("/{email}")
+    public UserResDTO getUserByEmail(@PathVariable String email){
+        return userService.getUserByEmail(email);
+    }
 }
