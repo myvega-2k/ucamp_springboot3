@@ -32,7 +32,16 @@ public class UserThymeleafController {
                              @Valid @ModelAttribute("user") UserReqFormDTO formDTO,
                              BindingResult result,
                              Model model) {
-
+        //입력항목 에러가 발생하면 update-user.html Form을 계속 띄워주기
+        if (result.hasErrors()) {
+            model.addAttribute("user",formDTO);
+            model.addAttribute("errors",result.getAllErrors());
+            return "update-user";
+        }
+        //Service 수정 메서드 호출
+        userService.updateUserForm(formDTO);
+        model.addAttribute("users", userService.getUserList());
+        return "index";
     }
 
 
