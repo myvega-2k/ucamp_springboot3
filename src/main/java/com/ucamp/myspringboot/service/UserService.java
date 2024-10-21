@@ -2,6 +2,7 @@ package com.ucamp.myspringboot.service;
 
 import com.ucamp.myspringboot.dto.UserReqDTO;
 import com.ucamp.myspringboot.dto.UserResDTO;
+import com.ucamp.myspringboot.dto.form.UserReqFormDTO;
 import com.ucamp.myspringboot.entity.User;
 import com.ucamp.myspringboot.exception.BusinessException;
 import com.ucamp.myspringboot.repository.UserRepository;
@@ -59,10 +60,17 @@ public class UserService {
     @Transactional
     public UserResDTO updateUser(Long id, UserReqDTO reqDTO){
         User existUser = getUserNotFound(id);
-        //setter methoda 만 호출 update 쿼리가 수행됨 dirty checking
+        //setter method 만 호출 update 쿼리가 수행됨 dirty checking
         existUser.setName(reqDTO.getName());
         existUser.setEmail(reqDTO.getEmail());
         return modelMapper.map(existUser, UserResDTO.class);
+    }
+
+    @Transactional
+    public void updateUserForm(UserReqFormDTO reqFormDTO) {
+        User existUser = getUserNotFound(reqFormDTO.getId());
+        existUser.setName(reqFormDTO.getName());
+        existUser.setEmail(reqFormDTO.getEmail());
     }
 
     @Transactional
