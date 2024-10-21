@@ -27,7 +27,16 @@ public class UserThymeleafController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @GetMapping("/edit/{id}")
+    @PostMapping("/update/{id}")
+    public String updateUser(@PathVariable("id") long id,
+                             @Valid @ModelAttribute("user") UserReqFormDTO formDTO,
+                             BindingResult result,
+                             Model model) {
+
+    }
+
+
+        @GetMapping("/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
         UserResDTO userResDTO = userService.getUser(id);
         model.addAttribute("user",userResDTO);
