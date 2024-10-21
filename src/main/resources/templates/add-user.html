@@ -2,13 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <meta charset="UTF-8">
 <body>
+<h2>User 등록</h2>
 <form action="#" th:action="@{/adduser}" th:object="${user}" method="post">
     <label for="name">Name</label>
+    <!--
+       th:field = id + name + value 3가지 속성을 생성해주는 타임리프 태그
+       id 속성은 label 과 연결을 하기 위한 속성
+       name 속성은 UserReqDTO 객체와 연결을 위한 속성
+       value 속성은 필드에 입력하는 값에 해당하는 속성
+    -->
     <input type="text" th:field="*{name}" id="name">
     <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
     <br/>
     <label for="email">Email</label>
-    <input type="text" th:field="*{email}" id="email">
+    <input type="text" th:field="*{email}" id="email" >
     <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
     <br/>
     <input type="submit" value="Add User">

@@ -1,4 +1,4 @@
-package com.ucamp.myspringboot.dto;
+package com.ucamp.myspringboot.dto.form;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -6,7 +6,9 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
-public class UserReqDTO {
+public class UserReqFormDTO {
+    private Long id;
+
     @NotEmpty(message = "Name은 필수 입력항목입니다.")
     private String name;
 
