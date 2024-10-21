@@ -27,50 +27,62 @@ public class UserThymeleafController {
     @Autowired
     private ModelMapper modelMapper;
 
+    //삭제 처리(DB에 delete)하기
+    @GetMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") long id) {
+        userService.deleteUser(id);
+        return "redirect:/index";
+    }
+
+    //수정 처리(DB에 update)하기
     @PostMapping("/update/{id}")
     public String updateUser(@PathVariable("id") long id,
                              @Valid @ModelAttribute("user") UserReqFormDTO formDTO,
-                             BindingResult result,
-                             Model model) {
+                             BindingResult result) {
         //입력항목 에러가 발생하면 update-user.html Form을 계속 띄워주기
         if (result.hasErrors()) {
-            model.addAttribute("user",formDTO);
-            model.addAttribute("errors",result.getAllErrors());
             return "update-user";
         }
         //Service 수정 메서드 호출
         userService.updateUserForm(formDTO);
-        model.addAttribute("users", userService.getUserList());
-        return "index";
+
+//        model.addAttribute("users", userService.getUserList());
+//        return "index";
+        return "redirect:/index";
     }
 
-
-        @GetMapping("/edit/{id}")
+    //수정 Form 띄워주기
+    @GetMapping("/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
         UserResDTO userResDTO = userService.getUser(id);
         model.addAttribute("user",userResDTO);
         return "update-user";
     }
 
+    //등록 처리(DB에 insert)하기
     @PostMapping("/adduser")
-    public String addUser(@Valid @ModelAttribute("user") UserReqDTO userForm, BindingResult result, Model model) {
+    public String addUser(@Valid @ModelAttribute("user") UserReqDTO userForm,
+                          BindingResult result) {
         //입력항목 에러가 발생하면 add-user.html Form을 계속 띄워주기
         if (result.hasErrors()) {
             return "add-user";
         }
         //Service 등록 메서드 호출
         userService.addUser(userForm);
-        model.addAttribute("users", userService.getUserList());
-        return "index";
+
+//        model.addAttribute("users", userService.getUserList());
+//        return "index";
+        return "redirect:/index";
     }
 
+    //등록 Form 띄워주기
     @GetMapping("/signup")
-    public String showSignUpForm(@ModelAttribute("user") UserReqDTO reqDTO, Model model) {
+    public String showSignUpForm(@ModelAttribute("user") UserReqDTO reqDTO) {
         //model.addAttribute("user",reqDTO);
         return "add-user";
     }
 
-
+    //사용자 목록 가져오기
     @GetMapping("/index")
     public ModelAndView index() {
         List<UserResDTO> userList = userService.getUserList();
