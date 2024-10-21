@@ -1,5 +1,6 @@
 package com.ucamp.myspringboot.controller;
 
+import com.ucamp.myspringboot.dto.UserReqDTO;
 import com.ucamp.myspringboot.dto.UserResDTO;
 import com.ucamp.myspringboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,13 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @GetMapping("/signup")
+    public String showSignUpForm(UserReqDTO reqDTO, Model model) {
+        model.addAttribute("user",reqDTO);
+        return "add-user";
+    }
+
 
     @GetMapping("/index")
     public ModelAndView index() {
