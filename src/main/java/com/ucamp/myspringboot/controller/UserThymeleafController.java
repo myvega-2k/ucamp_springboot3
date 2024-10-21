@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,6 +26,13 @@ public class UserThymeleafController {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @GetMapping("/edit/{id}")
+    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        UserResDTO userResDTO = userService.getUser(id);
+        model.addAttribute("user",userResDTO);
+        return "update-user";
+    }
 
     @PostMapping("/adduser")
     public String addUser(@Valid @ModelAttribute("user") UserReqDTO userForm, BindingResult result, Model model) {

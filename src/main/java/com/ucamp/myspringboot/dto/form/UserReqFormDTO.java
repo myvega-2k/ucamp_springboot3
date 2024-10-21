@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
+/*
+    타임리프를 사용하여 User를 수정하는 화면에서 연결되는 객체
+ */
 public class UserReqFormDTO {
     private Long id;
 
